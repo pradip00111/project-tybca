@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Cart</title>
+  <style>
+    cart-card {
+      border: 1px solid #aaa;
+      padding: 10px;
+      margin: 10px;
+      width: 200px;
+      background: #f9f9f9;
+    }
+    #cart-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+  
+  <h1>Your Cart</h1>
+  <div id="cart-container"></div>
+
+  
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function renderCart() {
+      const container = document.getElementById("cart-container");
+      container.innerHTML = '';
+
+      if (cart.length === 0) {
+        container.innerHTML = "<p>Your cart is empty.</p>";
+        return;
+      }
+
+      cart.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "cart-card";
+        div.innerHTML = `
+          <h3>${item.name}</h3>
+          <p>₹${item.price}</p>
+          <button onclick="buyItem(${index})">Buy</button>
+          <button onclick="deleteItem(${index})">Delete</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function deleteItem(index) {
+      cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderCart();
+    }
+
+    function buyItem(index) {
+      alert(`You bought ${cart[index].name} for ${cart[index].price}`);
+      deleteItem(index);
+    }
+
+    renderCart();
+  </script>
+</body>
+</html>

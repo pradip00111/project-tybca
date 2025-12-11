@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cart Page</title>
+  <style>
+     body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: wheat;
+      color: #100f0f;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    h1 {
+      margin-top: 20px;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    }
+     .product-card {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(12px);
+      border-radius: 15px;
+      padding: 20px;
+      width: 230px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeIn 0.6s ease forwards;
+      opacity: 0;
+    }
+    .product-card img {
+       width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+     #cart-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 30px;
+      max-width: 1000px;
+    }
+    
+    button {
+      color: #28a745;
+      margin: 10px 5px;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    button {
+      background: linear-gradient(135deg, #057920, #6dd5ed);
+      color: rgba(245, 245, 245, 0.584);
+    }
+
+    .delete-btn {
+  background: linear-gradient(135deg, #f46e8d, #fa4525);
+  color: rgba(255, 255, 255, 0.615);}
+
+    button:hover {
+      transform: scale(1.05);
+      opacity: 0.9;
+      color: #100f0f;
+    }
+
+ @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeOut {
+      from { opacity: 1; transform: translateY(0); }
+      to { opacity: 0; transform: translateY(20px); }
+    }
+
+    @media (max-width: 600px) {
+      .product-card {
+        width: 90%;
+      }}
+
+
+      .empty-cart {
+  font-size: 60px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #ff7eb3, #ff758c, #ff7eb3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fadeIn 1.8s ease forwards, pulse 1.5s infinite;
+  text-align: center;
+  margin-top: 40px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+
+  </style>
+</head>
+<body>
+  <h1>Your Cart</h1>
+  <div id="cart-container"></div>
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function renderCart() {
+      const container = document.getElementById("cart-container");
+      container.innerHTML = '';
+
+     if (cart.length === 0) {
+  container.innerHTML = `
+    <p class="empty-cart">🛒 Your Cart is Empty</p>
+  `;
+  return;
+}
+
+      cart.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "product-card";
+        div.innerHTML = `
+          <img src="${item.image}" alt="${item.name}">
+          <h3>${item.name}</h3>
+          <p>Price: ₹${item.price}</p>
+          <button class="btn buy-btn" onclick="buyItem(${index})">Buy</button>
+  <button class="btn delete-btn" onclick="deleteItem(${index})">Delete</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function buyItem(index) {
+     /* alert(`You bought ${cart[index].name} for ₹${cart[index].price}`);
+      deleteItem(index);*/
+
+      localStorage.setItem('selectedProduct', JSON.stringify(cart[index]));
+      // Redirect to payment page
+     window.location.href = 'ht.html';
+     
+    }
+
+    function deleteItem(index) {
+      cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderCart();
+    }
+
+    renderCart();
+  </script>
+</body>
+</html>

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="its a my first website">
+  <title>Bharat agro mart</title>
+  <link rel="stylesheet" href="css.css">
+
+
+
+</head>
+
+
+<header>
+
+<div id="mySidebar" class="sidebar">
+    <a href="index.html">🏠 Home</a>
+    <a href="#products">🍔 Product</a>
+    <a href="art.html">🛒 Cart</a>
+    <a href="#" onclick="showAccountInfo()">👤 Account</a>
+    <a href="#contact">&#128383 Contact</a>
+    <div class="sidebar-footer">
+  <button onclick="window.location.href='register.php'">🔑 Login</button>
+</div>
+</div>
+
+
+<button class="open-btn" onclick="toggleSidebar()" aria-label="Toggle Menu">
+  <span class="hamburger-line"></span>
+  <span class="hamburger-line"></span>
+  <span class="hamburger-line"></span>
+</button>
+
+
+
+
+<!-- Toggle Button -->
+<button class="open-btn" onclick="toggleSidebar()">☰</button>
+
+<!-- Overlay -->
+<div id="overlay" class="overlay" onclick="closePopup()"></div>
+
+<!-- Account Info Popup -->
+<div id="overlay" onclick="closePopup()"></div>
+
+<div id="accountPopup">
+    <button class="close-btn" onclick="closePopup()">×</button>
+    <h2>Account Information</h2>
+    <div class="account-info">
+        <p><strong>Name:</strong> <span id="accName"></span></p>
+        <p><strong>Address:</strong> <span id="accAddress"></span></p>
+        <p><strong>Phone:</strong> <span id="accPhone"></span></p>
+        <p><strong>Email:</strong> <span id="accEmail"></span></p>
+    </div>
+</div>
+
+
+
+
+
+
+  <div class="logo">Bharat Agro Mart</div>
+<!--  <nav>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#products">Products</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="register.html">Login</a></li>
+      
+  </nav>-->
+</header>
+
+
+
+
+<style>
+  * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      
+  }
+  body {
+      font-family: Arial, sans-serif;
+      
+  }
+  .pradip{
+    background-image:  url("download.jpg");
+    background-size: cover;
+    width: 99vw;
+   background-position: center;
+   background-repeat: no-repeat;
+      
+  }
+  .slider-container{
+    margin-top: 1px;
+    
+  }
+  .slider {
+      width: 40%;
+     max-width: 1000%;
+      height: auto;
+      overflow: hidden;
+      position: relative;
+      margin: auto;
+      
+      
+  }
+  .slides {
+      display: flex;
+      width: 300%;
+      transition: transform 1s ease-in-out;
+  }
+  .slide {
+      min-width: 100%;
+      padding: 5px;
+  }
+  .slide img {
+      width: 30%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+      filter: none;
+      filter: blur(0px);
+     
+  }
+  .dots {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 5px;
+  }
+  .dot {
+      width: 10px;
+      height: 10px;
+      background-color: gray;
+      border-radius: 50%;
+      cursor: pointer;
+  }
+  .dot.active {
+      background-color: white;
+  }
+  @media(max-width:768px){
+  .slider{
+   
+    width: 90%;
+  }
+  .dot{
+    width:8px;
+    height: 8px;
+  }
+.slide img{
+  width: 20%;
+  height: 100%;
+ margin-left: 16vh;
+  
+}}
+@media(max-width:431px){
+  .slide img{
+    margin-left: 9vh;
+  }
+}
+
+@media(max-width:320px){
+  .slide img{
+    margin-left: 8vh;}
+
+}
+
+
+
+</style>
+</head>
+<body>
+  <div class="pradip">
+<div class="slider">
+  <div class="slides">
+      <div class="slide"><img src="IMG_20250330_184455.jpg" alt="Food 1"></div>
+      <div class="slide"><img src="WhatsApp Image 2025-03-31 at 08.08.59_69d6a499.jpg" alt="Food 2"></div>
+      <div class="slide"><img src="WhatsApp Image 2025-03-31 at 08.08.58_f512f1d4.jpg" alt="Food 3"></div>
+      <div class="slide"><img src="WhatsApp Image 2025-03-31 at 08.08.56_b89e868f.jpg" alt="Food 2"></div>
+      <div class="slide"><img src="WhatsApp Image 2025-03-31 at 08.08.58_121c89f0.jpg" alt="Food 2"></div>
+  </div>
+  <div class="dots">
+      <span class="dot active" onclick="moveToSlide(0)"></span>
+      <span class="dot" onclick="moveToSlide(1)"></span>
+      <span class="dot" onclick="moveToSlide(2)"></span>
+      <span class="dot" onclick="moveToSlide(3)"></span>
+      <span class="dot" onclick="moveToSlide(4)"></span>
+  </div>
+</div></div><script>
+let currentIndex = 0;
+const slides = document.querySelector('.slides');
+const dots = document.querySelectorAll('.dot');
+const totalSlides = dots.length;
+
+function updateSlide() {
+  slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+  dots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === currentIndex);
+  });
+}
+
+function nextSlide() {
+  currentIndex = (currentIndex + 1) % totalSlides;
+  updateSlide();
+}
+
+function moveToSlide(index) {
+  currentIndex = index;
+  updateSlide();
+}
+
+setInterval(nextSlide, 3000);
+
+
+
+function searchProducts() {
+      let input = document.getElementById('searchBar').value.toLowerCase();
+      let products = document.querySelectorAll('.product-card');
+      
+      products.forEach(function(product) {
+        let text = product.textContent.toLowerCase();
+        product.style.display = text.includes(input) ? 'block' : 'none';
+      });
+    }
+
+
+
+
+    <!----hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh-->
+    
+    function addToCart(name, price) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+      const alreadyAdded = cart.find(p => p.name === name);
+      if (alreadyAdded) {
+        alert(`${name} is already in the cart.`);
+      } else {
+        cart.push({ name, price });
+        localStorage.setItem('cart', JSON.stringify(cart));
+        window.location.href = "cart.html"; // Redirect to cart page
+      }
+    }
+  
+
+</script>
+
+</body>
+</html>
+
+<section id="home">
+  <h1>Welcome to Our Bharat agro mart</h1><br>
+  <p>We provide the best quality or Fresh products directly from our farm.</p><br>
+  <a href="#products" class="btn">Shop Now</a>
+</section>
+
+
+<head>
+  <section id="products">
+    <h2>Our Product</h2>
+    <br>
+   <div class="search-container">
+    
+    <input type="text" id="searchBar" placeholder="Search products..." onkeyup="searchProducts()" />
+  </div>
+
+
+    <div class="product-list">
+      <div class="product-card">
+        <img src="WhatsApp Image 2025-01-05 at 10.08.49_6c0f746c.jpg" alt="Banana">
+        <br>
+        <h3>Fresh Bananas</h3>
+        <p><br>
+          &#8377;60 / Kg</p><br>
+
+        <li><a href="bb.html">read more</a></li><br>
+
+        <button onclick="addToCart('Fresh Bananas', 60,'WhatsApp Image 2025-01-05 at 10.08.49_6c0f746c.jpg')">Add to Cart</button>
+        <span> <a href="h4.html">Buy Now</a></span>
+      </div>
+
+      <div class="product-card">
+        <img src="a.jpg" size 10% alt="Banana Chips">
+        <br>
+        <h3>Apples</h3><br>
+        <p>&#8377;45 / Kg</p><br>
+        <li><a href="a.html">read more</a></li><br>
+        <button onclick="addToCart('Apples', 45,'a.jpg')">Add to Cart </button>
+        <span> <a href="ha.html">Buy Now</a></span>
+      </div>
+
+      <div class="product-card">
+        <img src="WhatsApp Image 2025-01-05 at 10.08.16_63fbcfb6.jpg" alt="tomato">
+        <h3>Tomatoes</h3><br>
+        <p>
+          &#8377;40/ Kg</p><br>
+        <li><a href="t.html">read more</a></li><br>
+        <button onclick="addToCart('Tomatoes', 40,'WhatsApp Image 2025-01-05 at 10.08.16_63fbcfb6.jpg')">Add to Cart</button>
+        <span> <a href="ht.html">Buy Now</a></span>
+      </div>
+
+      <div class="product-card">
+        <img src="WhatsApp Image 2025-01-05 at 10.10.17_63bddbd0.jpg" alt="Banana Chips">
+        <h3>Mangoes</h3><br>
+        <p>
+          &#8377;60 / KG</p><br>
+        <li><a href="m.html">read more</a></li><br>
+        <button onclick="addToCart('Mangoes', 60,'WhatsApp Image 2025-01-05 at 10.10.17_63bddbd0.jpg')">Add to Cart</button>
+        <span> <a href="hm.html">Buy Now</a></span>
+      </div>
+
+      <div class="product-card">
+        <img src="WhatsApp Image 2025-01-05 at 10.10.19_b84009df.jpg" alt="Banana Chips">
+        <h3>Onions</h3><br>
+        <p>&#8377;30/ KG</p><br>
+        <li><a href="o.html">read more</a></li><br>
+
+        <button onclick="addToCart('Onions', 30,'WhatsApp Image 2025-01-05 at 10.10.19_b84009df.jpg')">Add to Cart</button>
+       <span> <a href="ho.html">Buy Now</a></span>
+      </div>
+      <!-- Add more products as needed -->
+    </div>
+  </section>
+</head>
+<br>
+<head>
+  <section id="about">
+
+    <h2>About Us</h2><br>
+    <p>Bharat agro mart, we specialize in fresh farming and quality products.</p>
+  </section><br><br><br><br>
+</head>
+<section id="contact">
+  <h2>Contact Us</h2>
+  <form id="contactForm">
+    <input type="text" id="name" placeholder="Your Name" required>
+    <input type="email" id="email" placeholder="Your Email" required>
+    <textarea id="message" placeholder="Your Message" required></textarea>
+    <button type="submit">Send</button>
+  </form>
+</section>
+
+<section id="login">
+
+
+</section>
+<footer>
+  <p>&copy; 2024 Bharat agro mart .All rights reserved.</p><br>
+  <a href="https://www.instagram.com/pradip_avachar_2004/" target="_blank"><img src="2cda1925dcf4fb8f0644413f49671ffa.jpg" alt="instalogo"width="24"height="24"
+    style="vertical-align: middle;margin-right: 5px;">instagram
+  
+
+  </a> 
+    <a href="https://www.instagram.com/pradip_avachar_2004/" target="_blank"><img src="7ab261c112429812160c05ad9f487c2f.jpg" alt="instalogo"width="24"height="24" radius=55px;
+      style="vertical-align: middle;margin-right: 5px;">facebook
+    </a>
+</footer>
+
+<script src="script.js"></script>
+
+
+
+
+</body>
+
+</html>
+
+
+
+</body>
+
+</html>
